@@ -47,7 +47,7 @@
     {% if people.count > 0 %}
     <h2>Список пользователей</h2>
     <table>
-        <thead><th>Id</th><th>Имя</th><th>Возраст</th><th></th></thead>
+        <thead><th>Id</th><th>Имя</th><th>Фамилия</th><th>Отчество</th><th>логин</th><th>пароль</th><th>email</th><th>др</th></thead>
         {% for person in people %}
         <tr>
             <td>{{ person.id }}</td>
