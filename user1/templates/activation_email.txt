@@ -1,0 +1,7 @@
+Hello {{ username }}!
+ 
+To confirm your registration, visit the following link:
+ 
+{{ protocol }}://{{ domain }}{% url 'user1:activate'  uid token %}
+ 
+Welcome aboard!

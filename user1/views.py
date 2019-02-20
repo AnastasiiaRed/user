@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponseNotFound
-from .models import User
-
+from django.contrib.auth.models import User
+from .forms import  LoginForm
 from django.contrib.auth import authenticate
 # получение данных из бд
 def index(request):
@@ -56,43 +56,77 @@ def delete(request, id):
 	
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
+import datetime
+from .forms import  CreateUserForm
+
+#...
+app_name = 'user1'
+from django.contrib import messages
+from  django.shortcuts import redirect
+from django.contrib import auth
+
+def register(request):
+    if request.method == 'POST':
+        f = CreateUserForm(request.POST)
+        if f.is_valid():
+            f.save(request)
+            messages.success(request, 'Account created successfully. Check email to verify the account.')
+            return redirect('user1:register')
+ 
+    else:
+        f = CreateUserForm()
+ 
+    return render(request, 'register.html', {'form': f})
+
+def login(request):
+    if request.method == 'POST':
+ 
+        f = LoginForm(request.POST)
+        if f.is_valid():
+ 
+            user = User.objects.filter(email=f.cleaned_data['email'])
+ 
+            if user:
+                user = auth.authenticate(
+                    username=user[0].username,
+                    password=f.cleaned_data['password'],
+                )
+ 
+                if user:
+                    auth.login(request, user)
+                    return redirect( request.GET.get('next') or 'user1:index' )
+ 
+            messages.add_message(request, messages.INFO, 'Invalid email/password.')
+            return redirect('user1:login')
+ 
+    else:
+        f = LoginForm()
+ 
+    return render(request, 'login.html', {'form': f})
 
 
-class RegisterFormView(FormView):
-    form_class = UserCreationForm
 
-    # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
-    # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.
-    success_url = "/login/"
 
-    # Шаблон, который будет использоваться при отображении представления.
-    template_name = "register.html"
+import datetime
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from .forms import CreateUserForm
 
-    def form_valid(self, form):
-        # Создаём пользователя, если данные в форму были введены корректно.
-            form.save()
-            return super(RegisterFormView, self).form_valid(form)
-		
-from django.contrib.auth.forms import AuthenticationForm
+def activate_account(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if (user is not None and default_token_generator.check_token(user, token)):
+        user.is_active = True
+        user.save()
+        messages.add_message(request, messages.INFO, 'Account activated. Please login.')
+    else:
+        messages.add_message(request, messages.INFO, 'Link Expired. Contact admin to activate your account.')
+ 
+    return redirect('user1:login')
 
-# Функция для установки сессионного ключа.
-# По нему django будет определять, выполнил ли вход пользователь.
-from django.contrib.auth import login
 
-class LoginFormView(FormView):
-    form_class = AuthenticationForm
-
-    # Аналогично регистрации, только используем шаблон аутентификации.
-    template_name = "login.html"
-
-    # В случае успеха перенаправим на главную.
-    success_url = "/"
-
-    def form_valid(self, form):
-        # Получаем объект пользователя на основе введённых в форму данных.
-        self.user = form.get_user()
-
-        # Выполняем аутентификацию пользователя.
-        login(self.request, self.user)
-        return super(LoginFormView, self).form_valid(form)
 
