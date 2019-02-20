@@ -1,10 +1,9 @@
-from django.contrib import admin
-from . import views
-
-from django.conf.urls import include, url
-
-
-urlpatterns=[
-		url(r'',views.adduser,name='adduser'),
-
+from django.urls import path
+from user1 import views
+ 
+urlpatterns = [
+    path('', views.index),
+    path('create/', views.create),
+    path('edit/<int:id>/', views.edit),
+    path('delete/<int:id>/', views.delete),
 ]

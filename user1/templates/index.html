@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Модели в Django</title>
+</head>
+<body class="container">
+    <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <label>Введите имя</label><br>
+            <input type="text" name="name" value="{{person.name}}" />
+        </p>
+		<p>
+			<label>Введите фамилию</label><br>
+            <input type="text" name="lname" value="{{person.lname}}" />
+			
+			</p>
+			<p>
+			
+			<label>Введите отчество</label><br>
+            <input type="text" name="fname" value="{{person.fname}}" />
+			
+        </p>
+        <p>
+            <label>Введите email</label><br>
+            <input type="text" name="email" value="{{person.email}}" />
+			 </p>
+			 <p>
+			
+			<label>Введите логин</label><br>
+            <input type="text" name="login" value="{{person.login}}" />
+			
+        </p>
+			<p>
+			<label>Введите пароль</label><br>
+            <input type="password" name="password" value="{{person.password}}" />
+			 </p>
+			
+			<p>
+			<label>Введите дату рождения</label><br>
+            <input type="date" name="bdate" value="{{person.bdate}}" />
+			</p>
+			<input type="submit" value="Сохранить" >
+			
+    </form>
+    {% if people.count > 0 %}
+    <h2>Список пользователей</h2>
+    <table>
+        <thead><th>Id</th><th>Имя</th><th>Возраст</th><th></th></thead>
+        {% for person in people %}
+        <tr>
+            <td>{{ person.id }}</td>
+            <td>{{ person.name }}</td>
+			<td>{{ person.lname }}</td>
+			<td>{{ person.fname }}</td>
+			<td>{{ person.login }}</td>
+			<td>{{ person.password }}</td>
+            <td>{{ person.email }}</td>
+			<td>{{ person.bdate }}</td>
+			
+			
+            <td><a href="edit/{{person.id}}">Изменить</a> | <a href="delete/{{person.id}}">Удалить</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
