@@ -126,7 +126,7 @@ def activate_account(request, uidb64, token):
     else:
         messages.add_message(request, messages.INFO, 'Link Expired. Contact admin to activate your account.')
  
-    return redirect('user1:login')
+    return redirect('user1:index')
 
 
 
