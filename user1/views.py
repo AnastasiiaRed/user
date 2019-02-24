@@ -67,6 +67,17 @@ def calc_age(request, id):
     except User.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 		
+def get_FIO(request, id):
+    try:
+        person = User1.objects.get(id=id)
+        name=person.name
+        lname=person.lname
+        fname=person.fname
+        return render(request, "get_FIO.html", {"person": person})
+    except User.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+		
+		
 #-------------------------------------------------------------Chapter2-registration and Authentication------------
 	
 from django.views.generic.edit import FormView
