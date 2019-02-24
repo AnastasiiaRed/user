@@ -1,6 +1,5 @@
 Hello {{ username }}!
-Your {{ password }}
- 
+
 To confirm your registration, visit the following link:
 
  

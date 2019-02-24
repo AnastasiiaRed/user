@@ -4,6 +4,9 @@ from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 from .forms import  LoginForm
 from django.contrib.auth import authenticate
+
+from django.contrib import messages
+
 # получение данных из бд
 def index(request):
     people = User.objects.all()
