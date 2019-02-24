@@ -15,4 +15,5 @@ class User1(models.Model):
     is_blocked=models.BooleanField(max_length=200,default=False)
     auth_key=models.CharField(max_length=20,default='123456')
     age=models.IntegerField(max_length=20,null=True)
+    initials=models.CharField(max_length=50,null=True)
 	

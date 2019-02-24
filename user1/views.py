@@ -76,7 +76,17 @@ def get_FIO(request, id):
         return render(request, "get_FIO.html", {"person": person})
     except User.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
-		
+
+def get_short_FIO(request, id):
+    try:
+        person = User1.objects.get(id=id)
+        name1=person.name
+        lname1=person.lname
+        fname=person.fname
+        person.initials=lname1+' '+name1[0]+'.'+' '+fname[0]+'.'
+        return render(request, "get_short_FIO.html", {"person": person})
+    except User.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")		
 		
 #-------------------------------------------------------------Chapter2-registration and Authentication------------
 	
