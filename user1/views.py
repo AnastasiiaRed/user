@@ -4,18 +4,19 @@ from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 from .forms import  LoginForm
 from django.contrib.auth import authenticate
-
+from user1.models import User1
+from datetime import date
 from django.contrib import messages
 
 # получение данных из бд
 def index(request):
-    people = User.objects.all()
+    people = User1.objects.all()
     return render(request, "index.html", {"people": people})
  
 # сохранение данных в бд
 def create(request):
     if request.method == "POST":
-        person = User()
+        person = User1()
         person.name = request.POST.get("name")
         person.email = request.POST.get("email")
         person.login=request.POST.get("login")
@@ -23,15 +24,15 @@ def create(request):
         person.password=request.POST.get("password")
         person.fname=request.POST.get("fname")
         person.bdate=request.POST.get("bdate")
-        person.save()
+        person.save
     return HttpResponseRedirect("/")
  
 # изменение данных в бд
 def edit(request, id):
     try:
-        person = User.objects.get(id=id)
+        person = User1.objects.get(id=id)
         if request.method == "POST":
-            person = User()
+            person = User1()
             person.name = request.POST.get("name")
             person.email = request.POST.get("email")
             person.login=request.POST.get("login")
@@ -49,9 +50,20 @@ def edit(request, id):
 # удаление данных из бд
 def delete(request, id):
     try:
-        person = User.objects.get(id=id)
+        person = User1.objects.get(id=id)
         person.delete()
         return HttpResponseRedirect("/")
+    except User.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+
+def calc_age(request, id):
+    try:
+        person = User1.objects.get(id=id)
+        born=person.bdate
+        today = date.today()
+        person.age=today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+        person.save()
+        return render(request, "calc_age.html", {"person": person})
     except User.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 		

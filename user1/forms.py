@@ -1,12 +1,12 @@
 from django.forms import ModelForm
-from user1.models import User
+from user1.models import User1
 from django import forms
 from django.contrib.auth import authenticate
 
 
 class UserForm(ModelForm):
     class Meta:
-        model=User
+        model=User1
         fields = ['lname','fname','email','login','password']
 		
 from django.core.exceptions import ValidationError

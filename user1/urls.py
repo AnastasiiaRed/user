@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index,name='index'),
     path('create/', views.create),
     path('edit/<int:id>/', views.edit),
+	path('calc_age/<int:id>/', views.calc_age),
     path('delete/<int:id>/', views.delete),
 	url(r'^register/$', views.register,name='register'),
 	url('login/$', views.login,name='login'),

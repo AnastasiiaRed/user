@@ -58,9 +58,9 @@
 			<td>{{ person.password }}</td>
             <td>{{ person.email }}</td>
 			<td>{{ person.bdate }}</td>
+			<td> {{ years }} </td>
 			
-			
-            <td><a href="edit/{{person.id}}">Изменить</a> | <a href="delete/{{person.id}}">Удалить</a></td>
+            <td><a href="edit/{{person.id}}">Изменить</a> | <a href="delete/{{person.id}}">Удалить</a></td><a href="calc_age/{{person.id}}">Возраст</a></td>
         </tr>
         {% endfor %}
     </table>
