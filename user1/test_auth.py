@@ -15,7 +15,7 @@ class TestSuite(TestCase):
 
     def test_secure_page(self):
         self.c = Client()
-        self.user = authenticate(username='user', password='hello') 
+        self.user = authenticate(username='user') 
         login = self.c.login(username='user', password='hello') 
         self.assertTrue(login)
 		
