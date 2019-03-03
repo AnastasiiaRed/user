@@ -28,8 +28,8 @@ from django.core.mail import send_mail
 #...
  
 class CreateUserForm(UserCreationForm):
-    password1=forms.CharField(required=False)
-    password2=forms.CharField(required=False)
+    password1=forms.CharField(required=False,widget=forms.PasswordInput)
+    password2=forms.CharField(required=False, widget=forms.PasswordInput)
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')

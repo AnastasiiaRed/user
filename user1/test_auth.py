@@ -19,3 +19,15 @@ class TestSuite(TestCase):
         self.user = authenticate(username='user', password='hello') 
         login = self.c.login(username='user', password='hello') 
         self.assertTrue(login)
+		
+    def test_secure_page_1(self):
+        self.c = Client()
+        self.user = authenticate(username='', password='hello') 
+        login = self.c.login(username='', password='hello') 
+        self.assertTrue(login)
+		
+    def test_secure_page_2(self):
+        self.c = Client()
+        self.user = authenticate(username='testuser', password='he') 
+        login = self.c.login(username='testuser', password='he') 
+        self.assertTrue(login)
