@@ -10,8 +10,7 @@ from django.contrib.auth import authenticate
 
 class TestSuite(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', email='jacob@mzil.tu', password='hello')
-        self.user.set_password('hello') 
+        self.user = User.objects.create_user(username='testuser', email='jacob@mzil.tu')
         self.user.save()
 
     def test_secure_page(self):

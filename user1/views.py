@@ -10,7 +10,7 @@ from django.contrib import messages
 
 # получение данных из бд
 def index(request):
-    people = User.objects.all()
+    people = User1.objects.all()
     return render(request, "index.html", {"people": people})
  
 # сохранение данных в бд
@@ -95,7 +95,7 @@ from django.contrib.auth.forms import UserCreationForm
 import datetime
 from .forms import  CreateUserForm
 
-
+#...
 app_name = 'user1'
 from django.contrib import messages
 from  django.shortcuts import redirect
