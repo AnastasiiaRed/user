@@ -13,6 +13,7 @@ urlpatterns = [
 	path('get_short_FIO/<int:id>/', views.get_short_FIO),
     path('delete/<int:id>/', views.delete),
 	url(r'^register/$', views.register,name='register'),
+	url(r'^success/$', views.success,name='success'),
 	url('login/$', views.login,name='login'),
 	url(r'^activate/'
         r'(?P<uidb64>[0-9A-Za-z_\-]+)/'

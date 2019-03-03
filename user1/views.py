@@ -107,7 +107,7 @@ def register(request):
         if f.is_valid():
             f.save(request)
             messages.success(request, 'Account created successfully. Check email to verify the account.')
-            return redirect('user1:register')
+            return redirect('user1:success')
  
     else:
         f = CreateUserForm()
@@ -141,7 +141,8 @@ def login(request):
     return render(request, 'login.html', {'form': f})
 
 
-
+def success(request):
+    return render(request, "success.html")
 
 import datetime
 from django.contrib.auth.tokens import default_token_generator
